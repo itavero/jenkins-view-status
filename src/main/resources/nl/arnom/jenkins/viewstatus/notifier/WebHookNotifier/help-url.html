@@ -1,0 +1,20 @@
+<p>The url will be called with a HTTP POST request containing a JSON object in the body similar to:</p>
+<p><pre>{
+  "view": {
+    "name": "MyView",
+    "display_name": "My View",
+    "url": "http://localhost:8080/view/MyView/"
+  },
+  "result": {
+    "text": "SUCCESS",
+    "numeric": 0
+  },
+  "old_result": {
+    "text": "FAILURE",
+    "numeric": 2
+  },
+  "startup": false
+}</pre></p>
+<p>Note that <code>old_result</code> is optional and might not be included. During the start up phase of Jenkins CI the
+current status is determined. If the web hook is called because of this <code>startup</code> will be set
+to <code>true</code>.</p>

@@ -1,0 +1,6 @@
+<?jelly escape-by-default='true'?>
+
+<div>
+    This plug-in allows you to set-up notifications for completed builds across the entire Jenkins CI installation,
+    without having to configure each job manually.
+</div>

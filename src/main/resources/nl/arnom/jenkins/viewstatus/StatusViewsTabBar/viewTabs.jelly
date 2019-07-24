@@ -1,0 +1,27 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+  <!-- view tab bar -->
+  <j:set var="viewStatusIconSize" value="16x16" />
+  <l:tabBar>
+    <j:forEach var="v" items="${it.sort(views)}">
+     <div class="tab${v==currentView?' active':''}">
+        <j:choose>
+          <j:when test="${v==currentView}">
+            <input type="radio" id="tab-${tabBarId}-${tabIndex}" name="tab-group-${tabBarId}" checked="checked" />
+          </j:when>
+          <j:otherwise>
+            <input type="radio" id="tab-${tabBarId}-${tabIndex}" name="tab-group-${tabBarId}" />
+          </j:otherwise>
+        </j:choose>
+        <j:set var="viewBall" value="${it.getViewResult(v).color}" />
+        <j:set var="viewStatusIconUrl" value="${viewBall.getImageOf(viewStatusIconSize)}" />
+        <a href="${rootURL}/${v.url}" title="${v.displayName}">${v.displayName} <img src="${viewStatusIconUrl}" alt="${viewBall.description}" tooltip="${viewBall.description}" style="width:16px;height:16px" class="${viewBall.iconClassName} icon-sm" title="${viewBall.description}" /></a>
+      </div>
+      <j:set var="tabIndex" value="${tabIndex+1}" />
+    </j:forEach>
+    <j:if test="${currentView.hasPermission(currentView.CREATE)}">
+      <l:tab name="+" href="${rootURL}/${currentView.owner.url}newView" active="false"
+             title="${%New View}" />
+    </j:if>
+  </l:tabBar>
+</j:jelly>

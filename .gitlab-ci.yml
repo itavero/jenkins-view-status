@@ -1,0 +1,22 @@
+image: registry.gitlab.com/itavero/docker-gradle-git:latest
+
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+
+before_script:
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+
+build:
+  stage: build
+  script: gradle --build-cache jpi
+  artifacts:
+    when: on_success
+    name: "view-status_$CI_COMMIT_REF_NAME"
+    paths:
+      - build/libs/*.jpi
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: push
+    paths:
+      - build
+      - .gradle
