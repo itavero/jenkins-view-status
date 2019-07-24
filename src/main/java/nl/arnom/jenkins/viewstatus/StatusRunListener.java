@@ -36,7 +36,7 @@ public class StatusRunListener extends RunListener<Run<?, ?>> {
 		}
 
 		for(View view : jenkins.getViews()) {
-			if (view.contains((TopLevelItem)job)) {
+			if (IsItemInView(view, (TopLevelItem) job)) {
 				LOGGER.fine("Job " + job.getFullDisplayName() + " is on view " + view.getDisplayName() +". Trigger recalculation of status...");
 				if (tryAppend) {
 					StatusCache.getInstance().appendResultForView(view, run.getResult());
@@ -45,5 +45,17 @@ public class StatusRunListener extends RunListener<Run<?, ?>> {
 				}
 			}
 		}
+	}
+
+	private static boolean IsItemInView(View v, TopLevelItem i) {
+		if (v.contains(i)) {
+			return true;
+		}
+
+		if (i.getParent() instanceof TopLevelItem) {
+			return IsItemInView(v, (TopLevelItem)i.getParent());
+		}
+
+		return false;
 	}
 }

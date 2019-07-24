@@ -69,6 +69,7 @@ public class StatusCache {
 
   private void recalculateStatusOfView(View view) {
     Result viewResult = null;
+    // TODO Need to handle Folders here (not handled correctly now).
     for (TopLevelItem item : view.getAllItems()) {
       LOGGER.finest("Checking TopLevelItem " + item.getFullDisplayName());
       for (Job job : item.getAllJobs()) {
